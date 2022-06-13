@@ -1,0 +1,33 @@
+	public int process(String taskInternalID) throws SystemException {
+		// TODO Auto-generated method stub
+
+		String mspfilepath = "";
+
+		mspfilepath = "D:\\MPP_TEST\\Sample_Corrupted_Project_Data.mpp";
+
+		logger.info("MSP File to Read :" + mspfilepath);
+
+		ProjectFile projectfile = null;
+
+		try {
+
+			FileInputStream input = new FileInputStream(mspfilepath);
+
+			MPPReader mppreader = new MPPReader();
+			mppreader.setReadPresentationData(false);
+			projectfile = mppreader.read(input);
+
+			TaskContainer tasklist = projectfile.getTasks();
+			
+			for (Task task : tasklist) {
+				System.out.println(task.getUniqueID() + " --> " + 
+									task.getWBS() + " --> " +
+									task.getFieldByAlias("WBS Path ID") + " --> " +
+									task.getName() + " --> " +
+									task.getWork() + " --> " +
+						"" );
+			}
+			
+			System.out.println("Total Tasks Read = " + tasklist.size()); 
+			
+			System.exit(0);
